@@ -1,0 +1,51 @@
+#项目启动端口
+#第一部分 2025-03-03
+server:
+  address: :2002
+  #debug模式
+  model: debug
+  #release模式
+  #model: release
+
+#第二部分
+
+#配置数据库mysql
+db:
+  dialects: mysql
+  host: 127.0.0.1 #先写本地配置方便进行调式
+  port: 3306 #默认mysql端口地址
+  db: admin-go-api #对应文件
+  username: root
+  password: 123456
+  #用户名和数据库根据自己的去写 本人用户名root 密码123456 在bench上能够显示
+  charset: utf8
+  #最大空闲数
+  maxIdle: 50
+  #最大连接数
+  maxOpen: 150
+
+
+
+#redis 配置 第三部分
+redis:
+  address: 127.0.0.1:6379
+  password: 123456
+
+
+#图片上传配置 第四部分
+imageSetting:
+  #本地磁盘地址
+  uploadDir: /admin-go-api/upload/
+  #本地IP地址
+  imageHost: http://localhost:2002
+
+  #log 日志配置 第五部分
+log:
+  path: ./log
+  name: sys
+  #输出到控制台
+  model: console
+  #输出到文件中
+  #model: file
+
+
