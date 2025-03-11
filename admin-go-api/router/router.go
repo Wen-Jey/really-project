@@ -32,5 +32,6 @@ func register(router *gin.Engine) {
 	//todo 后续接口url
 	router.GET("/api/captcha", controller.Captcha)
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	router.POST("api/login", controller.Login)
 
 }

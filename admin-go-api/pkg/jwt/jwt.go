@@ -4,8 +4,10 @@ package jwt
 
 import (
 	"admin-go-api/api/entity"
+	"admin-go-api/common/constant"
 	"errors"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"time"
 )
@@ -38,10 +40,18 @@ func GenerateTokenByAdmin(admin entity.SysAdmin) (string, error) {
 		Email:    admin.Email,
 		Note:     admin.Note,
 	}
+	/*
+		c := userStdClaims {
+				jwtAdmin, // 自定义字段
+				jwt.RegisteredClaims{
+					ExpiresAt: time.NOW().Add(TokenExpireDuration).Unix(), // 过期时间
+					Issuer: "admin", //签发人
+				},
+	*/
 	c := userStdClaims{
 		jwtAdmin, // 自定义字段
 		jwt.RegisteredClaims{
-			ExpiresAt: time.Now().Add(TokenExpireDuration).Unix(),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(TokenExpireDuration)),
 			// 过期时间
 			Issuer: "admin", //签发人
 		},
@@ -73,4 +83,46 @@ func ValidateToken(tokenString string) (*entity.JwtAdmin, error) {
 		return nil, err
 	}
 	return &claims.JwtAdmin, err
+}
+
+// 返回id
+
+func GetAdminId(c *gin.Context) (uint, error) {
+	u, exist := c.Get(constant.ContextkeyUserObj)
+	if !exist {
+		return 0, errors.New("can't get user id")
+	}
+	admin, ok := u.(*entity.JwtAdmin)
+	if ok {
+		return admin.ID, nil
+	}
+	return 0, errors.New("can't convert to id struct")
+}
+
+// 返回用户名
+
+func GetAdminName(c *gin.Context) (string, error) {
+	u, exist := c.Get(constant.ContextkeyUserObj)
+	if !exist {
+		return string(string(0)), errors.New("can't get user name")
+	}
+	admin, ok := u.(*entity.JwtAdmin)
+	if ok {
+		return admin.Username, nil
+	}
+	return string(string(0)), errors.New("can't convert to api name")
+}
+
+// 返回admin信息
+
+func GetAdmin(c *gin.Context) (*entity.JwtAdmin, error) {
+	u, exist := c.Get(constant.ContextkeyUserObj)
+	if !exist {
+		return nil, errors.New("can't get api")
+	}
+	admin, ok := u.(*entity.JwtAdmin)
+	if ok {
+		return admin, nil
+	}
+	return nil, errors.New("can't convert to api struct")
 }
