@@ -20,12 +20,13 @@ func (t HTime) MarshalJSON() ([]byte, error) {
 	formatted := fmt.Sprintf("\"%s\"", t.Format(formatTime))
 	return []byte(formatted), nil
 }
+
 func (t *HTime) UnmarshalJSON(data []byte) (err error) {
-	now, err := time.ParseInLocation(`"`+formatTime+`"`, string(data),
-		time.Local)
+	now, err := time.ParseInLocation(`"`+formatTime+`"`, string(data), time.Local)
 	*t = HTime{Time: now}
 	return
 }
+
 func (t HTime) Value() (driver.Value, error) {
 	var zeroTime time.Time
 	if t.Time.UnixNano() == zeroTime.UnixNano() {
@@ -33,6 +34,7 @@ func (t HTime) Value() (driver.Value, error) {
 	}
 	return t.Time, nil
 }
+
 func (t *HTime) Scan(v interface{}) error {
 	value, ok := v.(time.Time)
 	if ok {
