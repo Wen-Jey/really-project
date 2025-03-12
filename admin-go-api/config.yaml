@@ -29,7 +29,6 @@ db:
 #redis 配置 第三部分
 redis:
   address: 127.0.0.1:6379
-  password: 123456
 
 
 #图片上传配置 第四部分
