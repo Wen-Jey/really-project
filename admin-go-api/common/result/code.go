@@ -15,6 +15,7 @@ type Codes struct {
 	CAPTCHANOTTRUE             uint
 	PASSWORDNOTTRUE            uint
 	STATUSISENABLE             uint
+	POSTALREADYEXISTS          uint
 }
 
 // APICode 状态
@@ -29,6 +30,7 @@ var ApiCode = &Codes{
 	CAPTCHANOTTRUE:             409,
 	PASSWORDNOTTRUE:            410,
 	STATUSISENABLE:             411,
+	POSTALREADYEXISTS:          412,
 }
 
 // 状态信息
@@ -43,6 +45,7 @@ func init() {
 		ApiCode.CAPTCHANOTTRUE:             "验证码不正确，请重新输入",
 		ApiCode.PASSWORDNOTTRUE:            "密码不正确",
 		ApiCode.STATUSISENABLE:             "您的账号已被停用,请联系管理员",
+		ApiCode.POSTALREADYEXISTS:          "岗位名称或岗位编码已存在，请重新输入",
 	}
 }
 

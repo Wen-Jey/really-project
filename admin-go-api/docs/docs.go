@@ -65,6 +65,34 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/post/add": {
+            "post": {
+                "description": "新增岗位接口",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "新增岗位接口",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.SysPost"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/result.Result"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -97,6 +125,39 @@ const docTemplate = `{
                 }
             }
         },
+        "entity.SysPost": {
+            "type": "object",
+            "properties": {
+                "createTime": {
+                    "description": "创建时间",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/util.HTime"
+                        }
+                    ]
+                },
+                "id": {
+                    "description": "ID",
+                    "type": "integer"
+                },
+                "postCode": {
+                    "description": "岗位编码",
+                    "type": "string"
+                },
+                "postName": {
+                    "description": "岗位名称",
+                    "type": "string"
+                },
+                "postStatus": {
+                    "description": "状态（1-\u003e正常 2-\u003e停用）",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                }
+            }
+        },
         "result.Result": {
             "type": "object",
             "properties": {
@@ -109,6 +170,14 @@ const docTemplate = `{
                 },
                 "message": {
                     "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "util.HTime": {
+            "type": "object",
+            "properties": {
+                "time.Time": {
                     "type": "string"
                 }
             }
