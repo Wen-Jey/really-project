@@ -25,6 +25,7 @@ func (r RedisStore) Set(id string, value string) {
 }
 
 // 获取验证码
+
 func (r RedisStore) Get(id string, clear bool) string {
 	key := constant.LOGIN_CODE + id
 	val, err := redis.RedisDb.Get(ctx, key).Result()

@@ -22,8 +22,6 @@ import (
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
-
-// 启动程序
 func main() {
 	log := log.Log()
 	gin.SetMode(config.Config.Server.Model)

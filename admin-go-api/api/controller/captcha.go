@@ -8,15 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @summary 验证码接口
-
-//  @Produce json
-
+// @Summary 验证码接口
+// @Tags 系统管理·
+// @Accept json
+// @Produce json
 // @Description 验证码接口
-
 // @Success 200 {object} result.Result
-
-// Captcha @router /api/captcha [get]
+// @Router /api/captcha [get]
 func Captcha(c *gin.Context) {
 	id, base64Image := service.CaptMake()
 	result.Success(c, map[string]interface{}{"idKey": id, "Image": base64Image})

@@ -45,8 +45,7 @@ func (s SysAdminServiceImpl) Login(c *gin.Context, dto entity.LoginDto) {
 	//校验
 	sysAdmin := dao.SysAdminDetail(dto)
 	if sysAdmin.Password != util.EncryptionMd5(dto.Password) {
-		result.Failed(c, int(result.ApiCode.PASSWORDNOTTRUE),
-			result.ApiCode.GetMessage(result.ApiCode.PASSWORDNOTTRUE))
+		result.Failed(c, int(result.ApiCode.PASSWORDNOTTRUE), result.ApiCode.GetMessage(result.ApiCode.PASSWORDNOTTRUE))
 		return
 	}
 	const status int = 2

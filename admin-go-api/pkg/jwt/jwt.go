@@ -7,14 +7,14 @@ import (
 	"admin-go-api/common/constant"
 	"errors"
 	"fmt"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
 	"time"
 )
 
 type userStdClaims struct {
 	entity.JwtAdmin
-	jwt.RegisteredClaims // StandardClaims更替
+	jwt.StandardClaims // StandardClaims更替
 }
 
 // 过期时间
@@ -40,22 +40,15 @@ func GenerateTokenByAdmin(admin entity.SysAdmin) (string, error) {
 		Email:    admin.Email,
 		Note:     admin.Note,
 	}
-	/*
-		c := userStdClaims {
-				jwtAdmin, // 自定义字段
-				jwt.RegisteredClaims{
-					ExpiresAt: time.NOW().Add(TokenExpireDuration).Unix(), // 过期时间
-					Issuer: "admin", //签发人
-				},
-	*/
+
 	c := userStdClaims{
 		jwtAdmin, // 自定义字段
-		jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(TokenExpireDuration)),
-			// 过期时间
-			Issuer: "admin", //签发人
+		jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(TokenExpireDuration).Unix(), // 过期时间
+			Issuer:    "backstage",                                // 签发人
 		},
 	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
 	return token.SignedString(Secret)
 

@@ -8,6 +8,8 @@ import (
 	"image/color"
 )
 
+//使用redis作为store
+
 var store = util.RedisStore{}
 
 //生成验证码
@@ -41,7 +43,7 @@ func CaptMake() (id, b64s string) {
 // 验证captcha是否正确
 
 func CaptVerify(id string, capt string) bool {
-	if store.Verify(id, capt, true) == false {
+	if store.Verify(id, capt, false) {
 		return true
 	} else {
 		return false

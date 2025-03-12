@@ -17,10 +17,13 @@ import (
 func InitRouter() *gin.Engine {
 	router := gin.New()
 
-	///宕机恢复
+	//宕机恢复
 	router.Use(gin.Recovery())
+	//跨域中间域
 	router.Use(middleware.Cors())
+	//图片访问路径静态文件夹可直接访问
 	router.StaticFS(config.Config.ImageSettings.UploadDir, http.Dir(config.Config.ImageSettings.UploadDir))
+	//log日志中间件
 	router.Use(middleware.Logger())
 	register(router)
 	return router

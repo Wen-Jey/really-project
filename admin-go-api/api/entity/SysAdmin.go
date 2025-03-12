@@ -36,10 +36,11 @@ type JwtAdmin struct {
 }
 
 // 登录对象
+
 type LoginDto struct {
 	Username string `json:"username" validate:"required"`          // 用户名
 	Password string `json:"password" validate:"required"`          // 密码
 	Image    string `json:"image" validate:"required,min=4,max=6"` // 验证码
-	IdKey    string `json:"idKey" validate:"required"`             //uuid
+	IdKey    string `json:"idKey" validate:"required"`             //UUID
 
 }
